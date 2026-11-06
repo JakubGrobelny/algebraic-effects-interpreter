@@ -23,6 +23,7 @@ executables:
     source-dirs: app
     dependencies:
     - algebraic-effects-interpreter
+    - text
     ghc-options:
     - -Wall
     - -threaded
