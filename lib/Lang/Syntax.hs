@@ -47,7 +47,9 @@ data Expr
   | HandleExpr Expr Handler
   deriving (Eq, Show)
 
-data Literal = Literal
+data Literal
+  = IntLiteral Integer
+  | StringLiteral Text
   deriving (Eq, Show)
 
 data BinOp = BinOp
