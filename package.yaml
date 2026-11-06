@@ -1,0 +1,27 @@
+name: algebraic-effects-interpreter
+version: 0.1.0.0
+license: GPL-3.0-only
+license-file: LICENSE
+
+extra-source-files:
+- README.md
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: lib
+  ghc-options:
+  - -Wall
+
+executables:
+  algebraic-effects-interpreter:
+    main: Main.hs
+    source-dirs: app
+    dependencies:
+    - algebraic-effects-interpreter
+    ghc-options:
+    - -Wall
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N

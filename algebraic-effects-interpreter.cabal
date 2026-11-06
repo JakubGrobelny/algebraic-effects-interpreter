@@ -1,0 +1,41 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.35.2.
+--
+-- see: https://github.com/sol/hpack
+
+name:           algebraic-effects-interpreter
+version:        0.1.0.0
+license:        GPL-3.0-only
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_algebraic_effects_interpreter
+  autogen-modules:
+      Paths_algebraic_effects_interpreter
+  hs-source-dirs:
+      lib
+  ghc-options: -Wall
+  build-depends:
+      base >=4.7 && <5
+  default-language: Haskell2010
+
+executable algebraic-effects-interpreter
+  main-is: Main.hs
+  other-modules:
+      Paths_algebraic_effects_interpreter
+  autogen-modules:
+      Paths_algebraic_effects_interpreter
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      algebraic-effects-interpreter
+    , base >=4.7 && <5
+  default-language: Haskell2010
