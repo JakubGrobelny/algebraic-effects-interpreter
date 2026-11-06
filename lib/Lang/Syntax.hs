@@ -32,7 +32,32 @@ data Binding
   deriving (Eq, Show)
 
 data Expr
+  = VarExpr Name
+  | ConExpr Name
+  | LiteralExpr Literal
+  | ApExpr Expr Expr
+  | BinOpExpr BinOp Expr Expr
+  | LambdaExpr [Pattern] Expr
+  | LetExpr Binding Expr
+  | IfExpr Expr Expr Expr
+  | SeqExpr Expr Expr
+  | TupleEpxr [Expr]
+  | AnnotatedExpr Expr Type
+  | MatchExpr Expr [(Pattern, Expr)]
+  | HandleExpr Expr Handler
+  deriving (Eq, Show)
 
-data Pattern
+data Literal = Literal
+  deriving (Eq, Show)
 
-data Type
+data BinOp = BinOp
+  deriving (Eq, Show)
+
+data Handler = Handler
+  deriving (Eq, Show)
+
+data Pattern = Pattern
+  deriving (Eq, Show)
+
+data Type = Type
+  deriving (Eq, Show)
