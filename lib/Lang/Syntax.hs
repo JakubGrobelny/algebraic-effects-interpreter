@@ -106,5 +106,15 @@ data Pattern
   | TuplePattern [Pattern]
   deriving (Eq, Show)
 
-data Type = Type
+data Type
+  = VarType Name
+  | ConType Name [Type]
+  | TupleType [Type]
+  | FunType Type (Maybe Row) Type
+  deriving (Eq, Show)
+
+data Row = Row [Effect] (Maybe Name)
+  deriving (Eq, Show)
+
+data Effect = Effect Name [Type]
   deriving (Eq, Show)
