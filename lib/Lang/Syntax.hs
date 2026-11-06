@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Lang.Syntax where
 
 import Data.Text (Text)
@@ -68,6 +70,22 @@ data BinOp
   | DivOp
   | ModOp
   deriving (Eq, Show)
+
+binOpSymbol :: BinOp -> Text
+binOpSymbol OrOp = "||"
+binOpSymbol AndOp = "&&"
+binOpSymbol EqOp = "=="
+binOpSymbol NeqOp = "!="
+binOpSymbol LtOp = "<"
+binOpSymbol LeOp = "<="
+binOpSymbol GtOp = ">"
+binOpSymbol GeOp = ">="
+binOpSymbol ConcatOp = "++"
+binOpSymbol AddOp = "+"
+binOpSymbol SubOp = "-"
+binOpSymbol MulOp = "*"
+binOpSymbol DivOp = "/"
+binOpSymbol ModOp = "%"
 
 data Handler = Handler
   deriving (Eq, Show)
