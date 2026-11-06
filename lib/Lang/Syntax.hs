@@ -52,7 +52,21 @@ data Literal
   | StringLiteral Text
   deriving (Eq, Show)
 
-data BinOp = BinOp
+data BinOp
+  = OrOp
+  | AndOp
+  | EqOp
+  | NeqOp
+  | LtOp
+  | LeOp
+  | GtOp
+  | GeOp
+  | ConcatOp
+  | AddOp
+  | SubOp
+  | MulOp
+  | DivOp
+  | ModOp
   deriving (Eq, Show)
 
 data Handler = Handler
