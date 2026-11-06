@@ -99,7 +99,11 @@ data OpClause = OpClause
   , opClauseBody :: Expr
   } deriving (Eq, Show)
 
-data Pattern = Pattern
+data Pattern
+  = VarPattern Name
+  | WildcardPattern
+  | LiteralPattern Literal
+  | TuplePattern [Pattern]
   deriving (Eq, Show)
 
 data Type = Type
