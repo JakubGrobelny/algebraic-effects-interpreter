@@ -1,0 +1,65 @@
+# this is a comment
+
+type List a =
+  | Nil
+  | Cons a (List a)
+
+type Option a =
+  | None
+  | Some a
+
+type Void
+
+effect State s =
+  | get : Unit -> s
+  | put : s -> Unit
+
+effect Choose =
+  | choose : Unit -> Bool
+
+effect Fail =
+  | fail : Unit -> Void
+
+let rec append xs ys =
+  match xs with
+  | Nil -> ys
+  | Cons x rest -> Cons x (append rest ys)
+  end
+
+let abort () = match fail () with end
+let tick () = put (get () + 1)
+
+let run_state init thunk =
+  (handle thunk () with
+   | return x -> fun s -> (x, s)
+   | get () k -> fun s -> k s s
+   | put s k  -> fun _ -> k () s
+   end) init
+
+let all_results thunk =
+  handle thunk () with
+  | return x    -> Cons x Nil
+  | choose () k -> append (k True) (k False)
+  end
+
+let to_option thunk =
+  handle thunk () with
+  | return x  -> Some x
+  | fail () _ -> None
+  end
+
+let branchy () =
+  tick ();
+  if choose () then tick () else ();
+  get ()
+
+let safe_div x y = if y == 0 then abort () else x / y
+
+let backtracking () = all_results (fun () -> run_state 0 branchy)
+let global () = run_state 0 (fun () -> all_results branchy)
+
+let main () =
+  match to_option (fun () -> safe_div 10 0) with
+  | None   -> print "division by zero"
+  | Some n -> print (int_to_string n)
+  end
