@@ -11,6 +11,8 @@ dependencies:
 
 library:
   source-dirs: lib
+  dependencies:
+  - megaparsec
   ghc-options:
   - -Wall
 
