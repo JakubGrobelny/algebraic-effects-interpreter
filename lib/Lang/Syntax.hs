@@ -1,6 +1,25 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lang.Syntax where
+module Lang.Syntax 
+  ( Located (..)
+  , Name
+  , Program (..)
+  , Decl (..)
+  , Ctor (..)
+  , OpSig (..)
+  , Rec (..)
+  , Binding (..)
+  , Expr (..)
+  , Literal (..)
+  , BinOp (..)
+  , binOpSymbol
+  , Handler (..)
+  , OpClause (..)
+  , Pattern (..)
+  , Type (..)
+  , Row (..)
+  , Effect (..)
+  ) where
 
 import Data.Text (Text)
 import Text.Megaparsec (SourcePos)
