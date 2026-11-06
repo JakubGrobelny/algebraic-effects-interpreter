@@ -88,7 +88,16 @@ binOpSymbol DivOp = "/"
 binOpSymbol ModOp = "%"
 
 data Handler = Handler
-  deriving (Eq, Show)
+  { handlerReturn :: Maybe (Pattern, Expr)
+  , handlerOps :: [OpClause]
+  } deriving (Eq, Show)
+
+data OpClause = OpClause
+  { opClauseName :: Name
+  , opClausePattern :: Pattern
+  , opClauseCont :: Maybe Name
+  , opClauseBody :: Expr
+  } deriving (Eq, Show)
 
 data Pattern = Pattern
   deriving (Eq, Show)
