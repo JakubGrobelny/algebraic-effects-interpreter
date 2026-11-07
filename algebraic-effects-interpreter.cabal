@@ -1,6 +1,6 @@
 cabal-version: 2.2
 
--- This file has been generated from package.yaml by hpack version 0.35.2.
+-- This file has been generated from package.yaml by hpack version 0.39.6.
 --
 -- see: https://github.com/sol/hpack
 
@@ -14,7 +14,9 @@ extra-source-files:
 
 library
   exposed-modules:
-      Lib
+      Lang.Lexer
+      Lang.Parser
+      Lang.Syntax
   other-modules:
       Paths_algebraic_effects_interpreter
   autogen-modules:
@@ -24,6 +26,8 @@ library
   ghc-options: -Wall
   build-depends:
       base >=4.7 && <5
+    , megaparsec
+    , text
   default-language: Haskell2010
 
 executable algebraic-effects-interpreter
@@ -38,4 +42,5 @@ executable algebraic-effects-interpreter
   build-depends:
       algebraic-effects-interpreter
     , base >=4.7 && <5
+    , text
   default-language: Haskell2010
