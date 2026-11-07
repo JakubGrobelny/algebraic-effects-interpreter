@@ -1,10 +1,5 @@
 # this is a comment
 
-#[
-  This is a block comment
-  Another line
-]#
-
 type List a =
   | Nil
   | Cons a (List a)

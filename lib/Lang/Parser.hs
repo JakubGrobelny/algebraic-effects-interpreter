@@ -2,7 +2,6 @@
 
 module Lang.Parser (parseProgram) where
 
-import Control.Applicative (empty)
 import Control.Monad.Combinators.Expr (Operator (..), makeExprParser)
 import Data.Either (partitionEithers)
 import Data.Text (Text)

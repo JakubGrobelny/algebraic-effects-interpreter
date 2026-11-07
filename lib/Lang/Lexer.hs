@@ -23,6 +23,7 @@ import Lang.Syntax (Name)
 import Text.Megaparsec
     ( MonadParsec (notFollowedBy, try)
     , Parsec
+    , empty
     , getOffset
     , manyTill
     , oneOf
@@ -38,7 +39,7 @@ import qualified Text.Megaparsec.Char.Lexer as L
 type Parser = Parsec Void Text
 
 whitespace :: Parser ()
-whitespace = L.space space1 (L.skipLineComment "#") (L.skipBlockComment "#[" "]#")
+whitespace = L.space space1 (L.skipLineComment "#") empty
 
 lexeme :: Parser a -> Parser a
 lexeme = L.lexeme whitespace
