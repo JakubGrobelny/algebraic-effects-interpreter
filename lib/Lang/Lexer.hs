@@ -1,6 +1,18 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Lang.Lexer (whitespace, keyword, bar, assign, lowerIdent, upperIdent, symbol, operator) where
+module Lang.Lexer
+    ( whitespace
+    , keyword
+    , bar
+    , assign
+    , lowerIdent
+    , upperIdent
+    , symbol
+    , operator
+    , wildcard
+    , integer
+    , stringLiteral
+    ) where
 
 import Data.Char (isAsciiLower, isAsciiUpper, isDigit)
 import Data.Maybe (fromMaybe)
@@ -12,6 +24,7 @@ import Text.Megaparsec
     ( MonadParsec (notFollowedBy, try)
     , Parsec
     , getOffset
+    , manyTill
     , oneOf
     , region
     , satisfy
@@ -19,7 +32,7 @@ import Text.Megaparsec
     , takeWhileP
     , (<?>)
     )
-import Text.Megaparsec.Char (space1, string)
+import Text.Megaparsec.Char (char, space1, string)
 import qualified Text.Megaparsec.Char.Lexer as L
 
 type Parser = Parsec Void Text
@@ -88,3 +101,16 @@ identifier start what = lexeme (try ident) <?> what
 
 symbol :: Text -> Parser ()
 symbol s = () <$ L.symbol whitespace s
+
+wildcard :: Parser ()
+wildcard =
+    (lexeme . try) (char '_' *> notFollowedBy (satisfy isIdentChar)) <?> "_"
+
+integer :: Parser Integer
+integer =
+    lexeme (L.decimal <* notFollowedBy (satisfy isIdentChar)) <?> "integer"
+
+stringLiteral :: Parser Text
+stringLiteral = lexeme (T.pack <$> body) <?> "string"
+  where
+    body = char '"' *> manyTill L.charLiteral (char '"')

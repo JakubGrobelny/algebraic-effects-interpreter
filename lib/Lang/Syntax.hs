@@ -48,7 +48,7 @@ data Rec = NonRec | Rec
     deriving (Eq, Show)
 
 data Binding
-    = FunBinding Name Rec [Name] (Maybe Type) Expr
+    = FunBinding Name Rec [Pattern] (Maybe Type) Expr
     | PatternBinding Pattern (Maybe Type) Expr
     deriving (Eq, Show)
 
@@ -62,7 +62,7 @@ data Expr
     | LetExpr Binding Expr
     | IfExpr Expr Expr Expr
     | SeqExpr Expr Expr
-    | TupleEpxr [Expr]
+    | TupleExpr [Expr]
     | AnnotatedExpr Expr Type
     | MatchExpr Expr [(Pattern, Expr)]
     | HandleExpr Expr Handler
@@ -71,6 +71,7 @@ data Expr
 data Literal
     = IntLiteral Integer
     | StringLiteral Text
+    | UnitLiteral
     deriving (Eq, Show)
 
 data BinOp
@@ -123,6 +124,7 @@ data OpClause = OpClause
 data Pattern
     = VarPattern Name
     | WildcardPattern
+    | ConPattern Name [Pattern]
     | LiteralPattern Literal
     | TuplePattern [Pattern]
     deriving (Eq, Show)
