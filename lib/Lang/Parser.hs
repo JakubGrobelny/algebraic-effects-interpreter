@@ -17,10 +17,11 @@ import Text.Megaparsec
     , option
     , optional
     , runParser
+    , sepBy
     , sepBy1
     , some
     , (<?>)
-    , (<|>), sepBy
+    , (<|>)
     )
 
 type Parser = Parsec Void Text
@@ -40,7 +41,8 @@ decl :: Parser Decl
 decl =
     choice
         [ typeDecl
-        -- TODO: effect declaration and let declaration
+        , effectDecl
+        -- TODO: let declaration
         ]
         <?> "declaration"
 
@@ -93,3 +95,19 @@ row = symbol "<" *> body <* symbol ">"
             , return (Row [] Nothing)
             ]
     effect = Effect <$> upperIdent <*> many atomicType
+
+effectDecl :: Parser Decl
+effectDecl =
+    keyword "effect"
+        *> (EffectDecl <$> upperIdent <*> many lowerIdent <* operator "=" <*> some opSig)
+  where
+    opSig =
+        bar
+            *> ( OpSig
+                    <$> lowerIdent
+                    <* operator ":"
+                    <*> applicationType
+                    <* operator "->"
+                    <*> arrowType
+               )
+            <?> "operation signature"

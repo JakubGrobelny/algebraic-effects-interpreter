@@ -1,0 +1,9 @@
+effect State s =
+  | get : Unit -> s
+  | put : s -> Unit
+
+effect Choose =
+  | choose : Unit -> Bool
+
+effect Fail =
+  | fail : Unit -> Void
