@@ -21,7 +21,6 @@ import Text.Megaparsec
     , optional
     , region
     , runParser
-    , sepBy
     , sepBy1
     , setErrorOffset
     , some
@@ -83,7 +82,7 @@ atomicType =
     parenType = do
         symbol "("
         t <- arrowType
-        ts <- sepBy arrowType (symbol ",")
+        ts <- many (symbol "," *> arrowType)
         symbol ")"
         return $ case ts of
             [] -> t
