@@ -7,7 +7,7 @@ let greet user_id =
   | None      -> "No user with id " ++ int_to_string user_id
   end
 
-let with_database thunk =
+let with_mock_database thunk =
   handle thunk () with
   | find_user id k ->
       match id with
@@ -18,5 +18,5 @@ let with_database thunk =
   end
 
 let main () =
-  print (with_database (fun () -> greet 1));
-  print (with_database (fun () -> greet 42))
+  print (with_mock_database (fun () -> greet 1));
+  print (with_mock_database (fun () -> greet 42))
