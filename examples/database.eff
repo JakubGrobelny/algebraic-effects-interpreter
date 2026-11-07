@@ -1,0 +1,22 @@
+effect Database =
+  | find_user : Int -> Option String
+
+let greet user_id =
+  match find_user user_id with
+  | Some name -> "Hello, " ++ name ++ "!"
+  | None      -> "No user with id " ++ int_to_string user_id
+  end
+
+let with_database thunk =
+  handle thunk () with
+  | find_user id k ->
+      match id with
+      | 1 -> k (Some "Alice")
+      | 2 -> k (Some "Bob")
+      | _ -> k None
+      end
+  end
+
+let main () =
+  print (with_database (fun () -> greet 1));
+  print (with_database (fun () -> greet 42))
