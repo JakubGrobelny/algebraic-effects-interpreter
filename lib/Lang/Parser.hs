@@ -17,8 +17,10 @@ import Text.Megaparsec
     , option
     , optional
     , runParser
+    , sepBy1
     , some
-    , (<?>), (<|>)
+    , (<?>)
+    , (<|>), sepBy
     )
 
 type Parser = Parsec Void Text
@@ -75,11 +77,19 @@ atomicType =
     parenType = do
         symbol "("
         t <- arrowType
-        ts <- many (symbol "," *> arrowType)
+        ts <- sepBy arrowType (symbol ",")
         symbol ")"
         return $ case ts of
             [] -> t
             _ -> TupleType (t : ts)
 
 row :: Parser Row
-row = empty -- TODO: implement
+row = symbol "<" *> body <* symbol ">"
+  where
+    body =
+        choice
+            [ Row [] . Just <$> lowerIdent
+            , Row <$> sepBy1 effect (symbol ",") <*> optional (bar *> lowerIdent)
+            , return (Row [] Nothing)
+            ]
+    effect = Effect <$> upperIdent <*> many atomicType

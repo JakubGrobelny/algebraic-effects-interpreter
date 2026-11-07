@@ -8,3 +8,5 @@ type Option a =
 
 type Void
 
+type RowExample = 
+    | RowExample (a -> <Eff a | e> b)
